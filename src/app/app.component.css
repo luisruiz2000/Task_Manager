@@ -180,5 +180,21 @@
   padding: .5rem;
 }
 
+@media (max-width: 884px) {
+  .viwpage {
+    width: 95%;
+  }
+}
 
+@media (max-width: 444px) {
 
+  .footer {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .filter {
+    width: 100%;
+  }
+
+}
