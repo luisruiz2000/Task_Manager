@@ -1,0 +1,184 @@
+.header {
+  height: 35vh;
+  width: 100%;
+  background: linear-gradient(180deg, #2605b8, #7a2fa5);
+  position: absolute;
+}
+
+
+.content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.viwpage {
+  width: 40%;
+  padding: 2rem;
+}
+
+.texts {
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 3rem;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+}
+
+.addTask {
+  padding: 1rem;
+  width: 80%;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border: solid 1px transparent;
+}
+
+.addTask:focus-visible {
+  outline: none;
+  border: solid 1px #7508a0;
+}
+
+.agregaTarea {
+  text-align: center;
+}
+
+.listTask {
+  border-radius: 8px 8px 0 0;
+  background-color: #fff;
+  padding: 1rem;
+  color: #3d3d3d;
+  position: relative;
+}
+
+.list {
+  list-style: none;
+}
+
+.completedTask {
+  text-decoration: line-through;
+  color: #ccc;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.editing {
+  z-index: 6;
+  padding: 10px;
+  width: 50%;
+  border: solid 1px #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  position: absolute;
+}
+
+.editing:focus {
+  border: solid 1px #7508a0;
+
+}
+
+.editing:focus-visible {
+  outline: none;
+}
+
+.checkbox {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid #3d3d3d;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  margin-right: 1rem;
+  position: relative;
+  vertical-align: middle;
+}
+
+.checkbox:checked {
+  background-color: #7a2fa5;
+  border-color: #7a2fa5;
+}
+
+.checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.labels {
+  font-size: 1.3rem;
+  vertical-align: middle;
+}
+
+.delete-icon {
+  visibility: hidden;
+  font-weight: bold;
+  color: #ccc;
+  font-size: 1.5rem;
+}
+
+.task-item:hover .delete-icon {
+  visibility: visible;
+  cursor: pointer;
+}
+
+.footer {
+  background-color: #fff;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 0 0 8px 8px;
+  height: 40px;
+}
+
+.filter {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 50%;
+}
+
+.filterActive {
+  cursor: pointer !important;
+  background-color: #fff !important;
+  padding: .5rem !important;
+  border: solid 1px #7508a0 !important;
+  transition: all linear .5s !important;
+}
+
+.itemFilter {
+  padding: .5rem;
+  margin: .1rem;
+  border: solid 1px transparent;
+  cursor: pointer;
+}
+
+.itemFilter:hover {
+  border: solid 1px #ccc;
+  padding: .5rem;
+}
+
+
+
