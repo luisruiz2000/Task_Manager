@@ -8,14 +8,14 @@ import {
   signal,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { Task } from '../app/models/task.model';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ReactiveFormsModule],
+  imports: [RouterOutlet, ReactiveFormsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'], // Corregido de styleUrl a styleUrls
 })
@@ -24,7 +24,14 @@ export class AppComponent {
 
   injector = inject(Injector);
 
+  tasksCompleted: number = 0;
+
+  tasks = signal<Task[]>([]);
+
+  filter = signal<'all' | 'pending' | 'completed'>('all');
+
   ngOnInit() {
+    // Recupera las tareas del almacenamiento local o inicializa el array 'tasks'.
     if (typeof window !== 'undefined' && window.localStorage) {
       const storage = localStorage.getItem('tasks');
       if (storage) {
@@ -35,6 +42,7 @@ export class AppComponent {
     this.trackTasks();
   }
 
+  // Sincroniza las tareas en el almacenamiento local cada vez que cambian.
   trackTasks() {
     effect(
       () => {
@@ -47,12 +55,7 @@ export class AppComponent {
     );
   }
 
-  tasksCompleted: number = 0;
-
-  tasks = signal<Task[]>([]);
-
-  filter = signal<'all' | 'pending' | 'completed'>('all');
-
+  /* Se filtran las tareas y si no hay filtros se devuelve todas las tasks del localstorage */
   tasksByFilter = computed(() => {
     const filter = this.filter();
     const tasks = this.tasks();
@@ -63,11 +66,13 @@ export class AppComponent {
     return tasks;
   });
 
+  /* Se crea el FormControl con validaciones para la entrada de datos */
   newTaskCtrl = new FormControl('', {
     nonNullable: true,
     validators: [Validators.required],
   });
 
+  /* Valida la entrada y la pasa a addTask si es correcta */
   changeHandle() {
     if (this.newTaskCtrl.valid) {
       const newTask = this.newTaskCtrl.value.trim();
@@ -78,6 +83,7 @@ export class AppComponent {
     }
   }
 
+  /* Actualiza el estado de una tarea como completada o pendiente */
   updateTask(index: number) {
     const taskToUpdate = this.tasksByFilter()[index];
 
@@ -98,6 +104,7 @@ export class AppComponent {
     console.log(this.tasksCompleted);
   }
 
+  /* Agrega una nueva tarea a la lista */
   addTask(title: string) {
     const newTask = {
       id: Date.now(),
@@ -108,6 +115,7 @@ export class AppComponent {
     this.tasks.update((tasks) => [...tasks, newTask]);
   }
 
+  /* Elimina una tarea de la lista */
   deleteTask(index: number) {
     if (this.tasksCompleted >= 1) {
       this.tasksCompleted--;
@@ -117,6 +125,7 @@ export class AppComponent {
     );
   }
 
+  /* Cambia el modo de edición de una tarea */
   updateTaskEditingMode(task: any, index: number) {
     if (!task.completed) {
       this.tasks.update((tasks) =>
@@ -128,6 +137,7 @@ export class AppComponent {
     }
   }
 
+  /* Actualiza el título de una tarea mientras está en modo de edición */
   updateTaskEditingTitle(index: number, event: Event) {
     const value = (event.target as HTMLInputElement).value;
     const taskToUpdate = this.tasksByFilter()[index];
@@ -141,6 +151,7 @@ export class AppComponent {
     );
   }
 
+  /* Cambia el filtro de visualización de tareas */
   changeFilter(filter: 'all' | 'pending' | 'completed') {
     this.filter.set(filter);
   }

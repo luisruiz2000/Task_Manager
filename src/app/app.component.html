@@ -15,27 +15,34 @@
 
       <section class="listTask">
         <ul>
-          <li (dblclick)="updateTaskEditingMode(task, i)" class="list" *ngFor="let task of tasksByFilter(); index as i">
+          @for (task of tasksByFilter(); track task; let i = $index) {
+          <li (dblclick)="updateTaskEditingMode(task, i)" class="list">
             <div class="task-item">
-              <div *ngIf="!task.editing">
+              @if (!task.editing) {
+              <div>
                 <input type="checkbox" class="checkbox" [checked]="task.completed" (change)="updateTask(i)">
                 <label [class.completedTask]="task.completed" class="labels">{{ task.title }}</label>
               </div>
+              }
               <!-- Modo Edicion -->
+              @if (task.editing) {
               <input (keydown.enter)="updateTaskEditingTitle(i, $event)" (blur)="updateTaskEditingTitle(i, $event)"
-                type="text" [class.editing]="task.editing" *ngIf="task.editing" [value]="task.title"
-                placeholder="Editar Tarea">
-
+                type="text" [class.editing]="task.editing" [value]="task.title" placeholder="Editar Tarea">
+              }
               <span (click)="deleteTask(i)" class="delete-icon">✕</span>
             </div>
           </li>
+          }
         </ul>
-        <h1 class="agregaTarea" *ngIf="tasksByFilter().length <= 0">No hay tareas</h1>
+        @if (tasksByFilter().length <= 0) { <h1 class="agregaTarea">No hay tareas</h1>
+          }
       </section>
 
       <footer class="footer">
         <div class="">
-          {{tasksByFilter().length}} Tarea<span *ngIf="tasks().length > 1 || tasks().length === 0">s</span>
+          {{tasksByFilter().length}} Tarea@if (tasks().length > 1 || tasks().length === 0) {
+          <span>s</span>
+          }
         </div>
         <div class="filter">
           <span [class.filterActive]="filter() === 'all'" (click)="changeFilter('all')" class="itemFilter">Todas</span>
